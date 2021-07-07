@@ -24,7 +24,11 @@ public class PostApiControllerTest {
 	}
 	
 	@GetMapping("test/post/{id}")
-	public Post findById(@PathVariable int id) {
-		return postRepository.findById(id).get();
+	public String findById(@PathVariable int id) {
+		Post postEntity = postRepository.findById(id).get();
+		System.out.println("Before get");
+		postEntity.getUser().getId();
+		System.out.println("After get");
+		return "ok";
 	}
 }

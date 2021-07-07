@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,9 +34,16 @@ public class User {
 	// id가 1일때 post에 user_id가 1인 것들을 조인해서 다 들고와줌 
 	// 하지만 @OneToMany때문에 외래키가 만들어지는데 그렇게 되면 안됨!
 	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", address=" + address + "posts=" + posts + "]";
+	}
+	
 	public List<Post> getPosts() {
 		return posts;
 	}
+	
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}

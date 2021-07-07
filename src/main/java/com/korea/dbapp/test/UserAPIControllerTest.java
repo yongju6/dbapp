@@ -36,8 +36,11 @@ public class UserAPIControllerTest {
 	
 	// http://localhost:8000/user/2
 	@GetMapping("/test/user/{id}")
-	public User findById(@PathVariable int id) {  //@PathVariable 이 위에 {} 안에 있는 id 값에 넣어주는 역할
-		return userRepository.findById(id).get(); // 무조건 값이 존재한다는 뜻(.get)
+	public String findById(@PathVariable int id) {  //@PathVariable 이 위에 {} 안에 있는 id 값에 넣어주는 역할
+		User userEntity = userRepository.findById(id).get();
+		userEntity.getPosts().get(0).getTitle();
+		System.out.println(userEntity.toString());
+		return "ok"; // 무조건 값이 존재한다는 뜻(.get)
 	}
 	
 	@GetMapping("/test/user/username/{username}")

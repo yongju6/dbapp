@@ -1,6 +1,7 @@
 package com.korea.dbapp.domain.post;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,13 +21,20 @@ public class Post {
 	private String content; 
 	
 	@JoinColumn(name="user_id")
-	@ManyToOne // 연관관계 설정 / 연관관계를 설정해야 ORM이 됨 
+	@ManyToOne(fetch = FetchType.LAZY) // 연관관계 설정 / 연관관계를 설정해야 ORM이 됨 
 	private User user; // ORM 사용
 	// post 만 select 하면 user도 매핑해줌
+	
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", title=" + title + ", content=" + content + ", user=" + user + "]";
+	}
 
 	public User getUser() {
 		return user;
 	}
+
+	
 
 	public void setUser(User user) {
 		this.user = user;

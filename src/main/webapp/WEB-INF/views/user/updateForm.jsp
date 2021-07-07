@@ -4,25 +4,25 @@
 
 <div class="container">
 	<!-- username=값&password=값&email=값&address=값 ==> x-www-urlencoded타입 (mime 타입) ==> body에 데이터 담김-->
-	<form action="/auth/join" method="POST">
+	<form action="/user/${principal.id}" method="POST">
 		<div class="form-group">
 			<label for="username">Username:</label> 
-			<input type="text" class="form-control" placeholder="Enter username" name="username" />
+			<input value="${principal.username}" type="text" class="form-control" placeholder="Enter username" readonly="readonly"/>
 		</div>
 		<div class="form-group">
 			<label for="password">Password:</label> 
-			<input type="password" class="form-control" placeholder="Enter password" name="password" />
+			<input value="${principal.password}" type="password" class="form-control" placeholder="Enter password" name="password" required="required"/>
 		</div>
 		<div class="form-group">
 			<label for="email">Email address:</label> 
-			<input type="email" class="form-control" placeholder="Enter email" name="email" />
+			<input value="${principal.email}" type="email" class="form-control" placeholder="Enter email" readonly="readonly" />
 		</div>
 		<input class="btn btn-info" type="button" onClick="goPopup();" value="주소 찾기" />
 		<div class="form-group">
 			<label for="address">Address:</label> 
-			<input type="text" class="form-control" placeholder="Enter address" name="address" id ="address" readonly="readonly" />
+			<input value="${principal.address}" type="text" class="form-control" placeholder="Enter address" name="address" id ="address" readonly="readonly" />
 		</div>
-		<button type="submit" class="btn btn-primary">회원가입</button>
+		<button type="submit" class="btn btn-primary">회원수정</button>
 
 	</form>
 </div>
