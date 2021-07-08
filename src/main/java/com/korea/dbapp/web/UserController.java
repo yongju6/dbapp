@@ -97,7 +97,6 @@ public class UserController {
 	
 	@PostMapping("/juso")
 	public String jusoResposne(String roadFullAddr, String inputYn, Model model) {
-		System.out.println("Addr : " + roadFullAddr);
 		// model --> request dispatcher
 		model.addAttribute("roadFullAddr", roadFullAddr);
 		model.addAttribute("inputYn", inputYn);
