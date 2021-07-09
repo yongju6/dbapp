@@ -21,7 +21,7 @@ public class Post {
 	private String content; 
 	
 	@JoinColumn(name="user_id")
-	@ManyToOne(fetch = FetchType.LAZY) // 연관관계 설정 / 연관관계를 설정해야 ORM이 됨 
+	@ManyToOne(fetch = FetchType.EAGER) // 연관관계 설정 / 연관관계를 설정해야 ORM이 됨 
 	private User user; // ORM 사용
 	// post 만 select 하면 user도 매핑해줌
 	
@@ -32,9 +32,7 @@ public class Post {
 
 	public User getUser() {
 		return user;
-	}
-
-	
+	}	
 
 	public void setUser(User user) {
 		this.user = user;
