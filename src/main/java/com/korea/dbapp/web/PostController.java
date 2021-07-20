@@ -1,5 +1,8 @@
 package com.korea.dbapp.web;
 
+
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -8,23 +11,28 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.korea.dbapp.domain.comment.Comment;
+import com.korea.dbapp.domain.comment.CommentRepository;
 import com.korea.dbapp.domain.post.Post;
 import com.korea.dbapp.domain.post.PostRepository;
 import com.korea.dbapp.domain.user.User;
-import com.korea.dbapp.util.Script;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor	// final 필드가 붙어 있는 애들을 생성자에 집어넣어서 만들어줌
 @Controller
 public class PostController {
 
 	private final PostRepository postRepository;
 	private final HttpSession session;
+	private final CommentRepository commentRepository;
+	// final은 무조건 생성자를 만들어주어야함
 
-	public PostController(PostRepository postRepository, HttpSession session) {
-		this.postRepository = postRepository;
-		this.session = session;
-	}
+	
 
 	@GetMapping({ "/", "/post" }) // 주소가 2개!
 	public String list(Model model) { // model = request
@@ -39,11 +47,16 @@ public class PostController {
 	public String detail(@PathVariable int id, Model model) {
 		Post postEntity = postRepository.findById(id).get();
 		model.addAttribute("postEntity", postEntity);
+		
+		//3. findByAllPostId - Get - 여기서 하는게 아니라 상세보기 페이지를 갈 때 사용해야함 --> PostController에 만들어야함
 
+		List<Comment> commentsEntity = commentRepository.mFindAllByPostId(id);
+		model.addAttribute("commentsEntity", commentsEntity);
+		
 		return "post/detail";
 	}
 
-	@PostMapping("/post/{id}")
+	@DeleteMapping("/post/{id}")
 	public @ResponseBody String deleteById(@PathVariable int id) {
 		// 1. 권한 체크(post id를 통해 user id를 찾아서 session의 id 비교) - 생략
 
@@ -59,9 +72,9 @@ public class PostController {
 		int userId = userEntity.getId();
 		if (postUserId == userId) {
 			postRepository.deleteById(id);
-			return Script.href("/");
+			return"ok";
 		} else {
-			return Script.back("삭제 실패");
+			return "fail";
 		} // end if-else
 	}
 
@@ -71,7 +84,8 @@ public class PostController {
 
 		return "post/saveForm"; // 파일 호출
 	}
-
+	
+//	@CrossOrigin
 	@PostMapping("/post")
 	public String save(Post post) {
 
@@ -102,8 +116,8 @@ public class PostController {
 		} // end if
 	}
 
-	@PostMapping("/post/{id}/update")
-	public String update(@PathVariable int id, String title, String content) {
+	@PutMapping("/post/{id}")
+	public @ResponseBody String update(@PathVariable int id, @RequestBody Post post) {
 		User user = (User) session.getAttribute("principal");
 		int loginId = user.getId();
 
@@ -111,13 +125,13 @@ public class PostController {
 		int postOwnerId = postEntity.getUser().getId();
 		
 		if (loginId == postOwnerId) {
-			postEntity.setTitle(title);
-			postEntity.setContent(content);
+			postEntity.setTitle(post.getTitle());
+			postEntity.setContent(post.getContent());
 			postRepository.save(postEntity);
-			return "redirect:/post/" + id;
+			return "ok";	//fecth 요청은 데이터가 return 되어야함
 		}else {
-			return "redirect:/auth/login";
+			return "fail";
 		}
-
 	}
+	
 }

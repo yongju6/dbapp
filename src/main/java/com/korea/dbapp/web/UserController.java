@@ -13,17 +13,14 @@ import com.korea.dbapp.domain.user.User;
 import com.korea.dbapp.domain.user.UserRepository;
 import com.korea.dbapp.util.Script;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class UserController {
 
 	private final UserRepository userRepository;
 	private final HttpSession session;
-
-	// 의존성 주입(DI; Dependency Injection)
-	public UserController(UserRepository userRepository, HttpSession session) {
-		this.userRepository = userRepository;
-		this.session = session;
-	}
 	
 	@GetMapping("/auth/joinForm")
 	public String joinForm() {
