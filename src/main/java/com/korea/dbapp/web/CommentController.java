@@ -48,7 +48,7 @@ public class CommentController {
 	}
 
 	// 1. save - Post - Data Return
-	@PostMapping("/comment")
+	@PostMapping("/comment") 
 	public @ResponseBody CMRespDto<Comment> save(@RequestBody CommentSaveReqDto dto) {
 		Comment comment = new Comment();
 		comment.setText(dto.getText());

@@ -8,3 +8,4 @@ public class CommentSaveReqDto {
 	private String text;
 	private int postId; // post_Id로 하지 않은 이유는 post_id로 하면 jackson이 인식을 못함
 }
+ 

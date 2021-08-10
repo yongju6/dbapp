@@ -49,7 +49,7 @@
 							<button class="badge" onclick="deleteComment(${comment.id})">삭제</button>	<!-- 함수에서 몇번째 댓글인지 알 수 없기 때문에 파라미터로 전달해줘야함 -->
 						</c:if>
 
-					</div>
+					</div> 
 				</li>
 			</c:forEach>
 		</ul>

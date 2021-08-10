@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // 전체 생성자 생성해줌
 @Data
 public class CMRespDto <T> {
-	// 클래스 자료형
+	// 클래스 자료형 
 	private int code;
 	private String msg;
 	private T data;

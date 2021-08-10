@@ -40,6 +40,9 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+  output:
+    ansi:
+      enabled: always
       
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
